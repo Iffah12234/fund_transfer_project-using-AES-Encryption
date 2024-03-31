@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='l.css') }}">
+</head>
+<body>  
+    <main>
+        <div class="signup-form">
+            <img src="{{ url_for('static', filename='logo2.png') }}" alt="CipherVault Logo" style="max-width: 350px;">
+            <br>
+            <form method="post" action="/signup">
+                <br>
+                {% if error_message %}
+                <div class="alert error-container">{{ error_message }}</div>
+                {% endif %}
+                <label for="username">Username:</label>
+                <input type="text" name="username" value="{{ entered_username }}" required>
+                <br>
+                <label for="email">Please Enter Your Email Address:</label>
+                <input type="email" name="email" placeholder="example@gmail.com" value="{{ entered_email }}" style="color: white;" required>
+
+                <br>
+                <label for="password">Password:</label>
+                <input type="password" name="password" placeholder="E.g.,12 Characters, lowercase, Uppercase, Digits & Special characters" style="font-size: 0.85em;" required>
+
+
+                <br>
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" name="confirm_password" placeholder="Re-Enter Your Password" required>
+                <br>
+                <button type="submit" value="Sign Up">Sign up</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Payees - Online Fund Transfer</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='l.css') }}">
+    <style>
+        /* Add your custom CSS styles here */
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px; /* Adjust as needed */
+        }
+        .submit-button {
+            flex-basis: 45%; /* Adjust as needed */
+        }
+        .payee-form {
+            display: none; /* Initially hide the form */
+        }
+        .payee-entry {
+            margin-bottom: 10px; /* Adjust as needed */
+            border: 1px solid #ccc; /* Add borders for better separation */
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <form class="d-flex ml-auto" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo2.png') }}" alt="CipherFault Logo">
+        </div>
+        <a href="{{ url_for('mainpage') }}">Home</a>
+        <a href="{{ url_for('transfer') }}">Transfer Money</a>
+        <a href="{{ url_for('balance') }}">Account Balance</a>
+        <a href="{{ url_for('payees') }}">Manage Payees</a>
+        <a href="{{ url_for('history') }}">Transaction History</a>
+        <a href="{{ url_for('settings') }}">Settings</a>
+        <!-- Add the "About Us" link here -->
+        <a href="{{ url_for('about') }}">About Us</a>
+        <a href="{{ url_for('front') }}" style="position: absolute; bottom: 40px; left: 10px;">Log Out</a>
+    </div>
+
+    <main class="payees-list">
+        <h2>Manage Payees</h2>
+         <!-- Payees list -->
+         <div id="payees-list">
+            <!-- Payees will be dynamically added here -->
+        </div>
+        <!-- Form for adding new payee -->
+        <div class="add-payee-form">
+            <button id="add-payee-button" class="submit-button">Add Payee</button>
+        </div>
+        <br>
+       
+        <!-- Form for adding new payee -->
+        <form id="payee-form" class="payee-form" action="/check_account" method="POST">
+            <div class="form-group">
+                <label for="payee_name">Payee Name:</label>
+                <input type="text" id="payee_name" name="payee_name" placeholder="Payee Name" required>
+            </div>
+            <div class="form-group">
+                <label for="account_number">Account Number:</label>
+                <input type="text" id="account_number" name="account_number" placeholder="8-Digit Account Number" required pattern="\d{8}">
+            </div>
+            <div class="button-group">
+                <button type="submit" class="edit-button">Add Payee</button>
+                <button type="button" id="cancel-payee" class="edit-button">Cancel</button>
+            </div>
+        </form>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 CipherVault. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Event listener for the "Add Payee" button
+            document.getElementById('add-payee-button').addEventListener('click', function() {
+                document.getElementById('payee-form').style.display = 'block';
+            });
+    
+            // Event listener for the form submission
+            document.getElementById('payee-form').addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent default form submission behavior
+    
+                // Get the form data
+                var payeeName = document.getElementById('payee_name').value;
+                var accountNumber = document.getElementById('account_number').value;
+    
+                // Create a FormData object to send the form data as a POST request
+                var formData = new FormData();
+                formData.append('payee_name', payeeName);
+                formData.append('account_number', accountNumber);
+    
+                // Send a POST request to the server
+                fetch('/check_account', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the response from the server
+                    if (data.account_exists) {
+                        // Account exists, update UI (you can add your logic here)
+                        var payeesList = document.getElementById('payees-list');
+                        var newPayeeEntry = document.createElement('div');
+                        newPayeeEntry.classList.add('payee-entry');
+                        newPayeeEntry.innerHTML = '<div class="payee-details"><span>Payee: ' + payeeName + '</span><a href="/transfer" class="edit-button">Transfer</a></div><div>Account Number: ' + accountNumber + '</div>';
+                        payeesList.appendChild(newPayeeEntry);
+                        
+                    } else {
+                        // Account does not exist, display error message
+                        alert('Account does not exist. Please enter a valid account number.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='l.css') }}">
+
+    <title>CipherFault Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="l.css"> <!-- Link to the external CSS file -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+          
+            <form class="d-flex ml-auto" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="logo">
+        <img src="{{ url_for('static', filename='logo2.png') }}" alt="CipherFault Logo">
+    </div>
+    <a href="{{ url_for('mainpage') }}">Home</a>
+    <a href="{{ url_for('transfer') }}">Transfer Money</a>
+    <a href="{{ url_for('balance') }}">Account Balance</a>
+    <a href="{{ url_for('payees') }}">Manage Payees</a>
+    <a href="{{ url_for('history') }}">Transaction History</a>
+    <a href="{{ url_for('settings') }}">Settings</a>
+    <!-- Add the "About Us" link here -->
+    <a href="{{ url_for('about') }}">About Us</a>
+    <a href="{{ url_for('front') }}"style="position: absolute; bottom: 40px; left: 10px;">Log Out</a>
+
+</div>
+
+<div class="content">
+    <div class="user-info">
+        <h2>User Information</h2>
+        <p><strong>User:</strong> {{ username }}</p>
+        <p><strong>Account Number:</strong> {{ account_number }}</p>
+    </div>
+    <div class="account-summary">
+        <h2>Account Summary</h2>
+        <p><strong>Current Balance:</strong> ₹{{ balance }}</p>
+    </div>
+</div>
+
+    <div id="transactionChartContainer">
+        <canvas id="transactionChart"></canvas>
+    </div>
+    </div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 CipherVault. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add this script at the end of your body section
+        var ctx = document.getElementById('transactionChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May'],
+                datasets: [{
+                    label: 'Monthly Transactions',
+                    data: [12, 19, 3, 5, 2],
+                    backgroundColor: 'rgba(219, 52, 85, 0.8)', // Adjust the color
+                    borderColor: 'rgba(219, 52, 85, 1)', // Adjust the border color
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    },
+                    x: {
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.8)' // Set the label color to white
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'rgba(255, 255, 255, 0.8)' // Set the legend label color to white
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    
+
+</body>
+</html>

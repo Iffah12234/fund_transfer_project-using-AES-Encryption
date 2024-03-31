@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Online Fund Transfer</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='l.css') }}">
+</head>
+<body>
+
+
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+          
+            <form class="d-flex ml-auto" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+        <!-- Sidebar -->
+<div class="sidebar">
+    <div class="logo">
+        <img src="{{ url_for('static', filename='logo2.png') }}" alt="CipherFault Logo">
+    </div>
+    <a href="{{ url_for('mainpage') }}">Home</a>
+    <a href="{{ url_for('transfer') }}">Transfer Money</a>
+    <a href="{{ url_for('balance') }}">Account Balance</a>
+    <a href="{{ url_for('payees') }}">Manage Payees</a>
+    <a href="{{ url_for('history') }}">Transaction History</a>
+    <a href="{{ url_for('settings') }}">Settings</a>
+    <!-- Add the "About Us" link here -->
+    <a href="{{ url_for('about') }}">About Us</a>
+    <a href="{{ url_for('front') }}"style="position: absolute; bottom: 40px; left: 10px;">Log Out</a>
+
+</div>
+
+    <main>
+        <div class="about-us-content">
+            <h2>Welcome to CipherVault</h2>
+            <p>CipherVault is your dedicated platform for secure online fund transfers. We are committed to providing a seamless and encrypted experience for managing your financial transactions.</p>
+
+            <p>Our project is centered around the implementation of AES (Advanced Encryption Standard) for robust security in online fund transfers. Unlike the disadvantages of DES (Data Encryption Standard), AES offers superior encryption, ensuring the confidentiality and integrity of your sensitive information.</p>
+
+            <p>Key Features of CipherVault:</p>
+            <ul>
+                <li>State-of-the-art AES encryption for secure transactions</li>
+                <li>User-friendly interface for easy navigation</li>
+                <li>Real-time transaction updates and account balance tracking</li>
+                <li>Customizable settings to tailor the platform to your preferences</li>
+                <li>Efficient management of payees for quick and convenient transfers</li>
+            </ul>
+
+            <p>At CipherVault, we understand the importance of secure financial transactions in today's digital age. Our platform employs state-of-the-art encryption techniques to safeguard your data, providing you with peace of mind when transferring funds online.</p>
+
+            <p>Explore the various features on our platform, from money transfers and transaction history to managing payees. We are dedicated to maintaining the highest standards of security and efficiency in online fund transfers.</p>
+
+            <p>Thank you for choosing CipherVault for your financial needs. Join us in creating a secure and reliable online financial ecosystem!</p>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 CipherVault. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+</body>
+</html>

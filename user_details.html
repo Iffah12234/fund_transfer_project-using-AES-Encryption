@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details</title>
+    
+    <style>
+        body {
+            background: url('{{ url_for("static", filename="background.jpg") }}') no-repeat;
+            background-position: center;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: background 0.5s ease;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 80px auto;
+            background-color: #0c0c0c;
+            color: #080808;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            text-align: center; /* Center align all content */
+        }
+
+        .logo {
+            max-width: 80%; /* Adjusted logo size */
+            height: auto;
+            margin-bottom: 20px;
+            display: block; /* Ensure the logo is displayed as a block element */
+            margin-left: auto; /* Center the logo horizontally */
+            margin-right: auto; /* Center the logo horizontally */
+        }
+
+        h3 {
+            font-size: 20px; /* Adjusted font size */
+            margin-bottom: 20px; /* Added margin bottom for spacing */
+        }
+
+        form {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 10px;
+            color: #ecf0f1;
+        }
+
+        input {
+                width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+        border: 1px solid #fff;
+        border-radius: 5px;
+        background-color: #363535;
+        color: rgb(251, 247, 247);
+}
+        
+
+        button {
+            background-color: #ff4d4d; /* Red color for sign-up button */
+            color: #fff;
+            padding: 14px 24px; /* Increased padding for better button size */
+            border: none;
+            border-radius: 6px; /* Rounded corners */
+            cursor: pointer;
+            font-size: 16px; /* Increased font size */
+        }
+
+        button:hover {
+            background-color: #e60000; /* Darker red on hover */
+        }
+
+        footer {
+            background-color: transparent; /* Transparent background */
+            color: #befcd0; /* Green text color */
+            text-align: center; /* Center align text */
+            padding: 10px 0; /* Added padding for spacing */
+        }
+
+        .error-container {
+            background-color: #ffcccc; /* Light red background color */
+            color: #ff0000; /* Red text color */
+            border: 1px solid #ff0000; /* Red border */
+            padding: 10px; /* Padding around the error message */
+            border-radius: 4px; /* Rounded corners */
+            margin-bottom: 10px; /* Bottom margin */
+            animation: fadeIn 0.5s ease; /* Add a fade-in animation */
+        }
+
+        input[type="text"]::placeholder {
+            color: #8e8c8c; /* Placeholder text color */
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <img src="{{ url_for('static', filename='logo2.png') }}" alt="CipherVault Logo" class="logo">
+        <h3><center>Please enter your account details below:</center></h3>
+        <form id="signupForm" method="post" action="/signup_account" onsubmit="return validateForm()">
+            <!-- Your existing form fields -->
+            {% if error %}
+            <div class="error-container">{{ error }}</div>
+            {% endif %}
+            <label for="username">Account Holder Name:</label>
+            <input type="text" id="username" name="username" value="{{ username }}" required>
+            
+            
+            <label for="account_number">Account Number:</label>
+           
+            <input type="text" id="account_number" name="account_number" value="{{ account_number }}" required placeholder="Enter your 8 digit account number">
+
+            <label for="balance">Balance:</label>
+            <input type="text" id="balance" name="balance" value="{{ balance }}" required>
+
+            <label for="pin">Set up a 4-digit PIN:</label>
+            <input type="password" id="pin" name="pin" required placeholder="Enter your 4-digit PIN">
+
+            <button type="submit" value="Sign Up">Sign up</button>
+        </form>
+    </div>
+    
+    <footer>
+        
+            <p>&copy; 2024 CipherVault. All rights reserved.</p>
+       
+    </footer>
+    <script>
+        function validateForm() {
+            var username = document.getElementById("username").value;
+            var account_number = document.getElementById("account_number").value;
+            var balance = document.getElementById("balance").value;
+            var pin = document.getElementById("pin").value;
+    
+            if (username === "" || account_number === "" || balance === "" || pin === "") {
+                alert("Please fill in all fields.");
+                return false;
+            }
+    
+            if (account_number.length !== 8 || isNaN(account_number)) {
+                alert("Please enter a valid 8-digit account number.");
+                return false;
+            }
+    
+            if (balance.length === 0 || isNaN(balance)) {
+                alert("Please enter a valid balance.");
+                return false;
+            }
+    
+            if (pin.length !== 4 || isNaN(pin)) {
+                alert("Please enter a valid 4-digit PIN.");
+                return false;
+            }
+    
+            return true;
+        }
+    
+        // Function to allow only numeric input and restrict length to 8 digits
+        function allowOnlyNumericAndEightDigits(event) {
+            var inputField = event.target;
+            var keyCode = event.keyCode || event.which;
+            var keyValue = String.fromCharCode(keyCode);
+    
+            // Check if the input is numeric and the length is less than 8
+            if (/\D/.test(keyValue) || inputField.value.length >= 8) {
+                event.preventDefault();
+            }
+        }
+    
+        // Function to allow only numeric input and restrict length to 4 digits
+        function allowOnlyNumericAndFourDigits(event) {
+            var inputField = event.target;
+            var keyCode = event.keyCode || event.which;
+            var keyValue = String.fromCharCode(keyCode);
+    
+            // Check if the input is numeric and the length is less than 4
+            if (/\D/.test(keyValue) || inputField.value.length >= 4) {
+                event.preventDefault();
+            }
+        }
+    
+        // Attach the allowOnlyNumericAndEightDigits function to input fields
+        document.getElementById("account_number").addEventListener("keypress", allowOnlyNumericAndEightDigits);
+        document.getElementById("balance").addEventListener("keypress", allowOnlyNumericAndEightDigits);
+        document.getElementById("pin").addEventListener("keypress", allowOnlyNumericAndFourDigits);
+    </script>
+    
+</body>
+</html>    

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Balance - Online Fund Transfer</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='l.css') }}">
+</head>
+<body>
+
+
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+          
+            <form class="d-flex ml-auto" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+        <!-- Sidebar -->
+<div class="sidebar">
+    <div class="logo">
+        <img src="{{ url_for('static', filename='logo2.png') }}" alt="CipherFault Logo">
+    </div>
+    <a href="{{ url_for('mainpage') }}">Home</a>
+    <a href="{{ url_for('transfer') }}">Transfer Money</a>
+    <a href="{{ url_for('balance') }}">Account Balance</a>
+    <a href="{{ url_for('payees') }}">Manage Payees</a>
+    <a href="{{ url_for('history') }}">Transaction History</a>
+    <a href="{{ url_for('settings') }}">Settings</a>
+    <!-- Add the "About Us" link here -->
+    <a href="{{ url_for('about') }}">About Us</a>
+    <a href="{{ url_for('front') }}"style="position: absolute; bottom: 40px; left: 10px;">Log Out</a>
+
+</div>
+
+    <main>
+        <div class="account-balance">
+            <h2>Account Balance</h2>
+            <div class="balance-info">
+                <label for="current-balance">Current Balance:</label>
+                <div id="current-balance" class="balance-amount">₹{{ balance }}</div>
+            </div>
+        </div>
+        
+    </main>
+
+    <!-- Footer -->
+    <footer >
+        
+            <p>&copy; 2024 CipherVault. All rights reserved.</p>
+        
+    </footer>
+
+</body>
+</html>
